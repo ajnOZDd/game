@@ -37,10 +37,8 @@ public class AllPanel extends JPanel {
     panel.draw(g2d);
     setPanelSize();
     background.draw(g2d);
-    f.addKeyListener(k);
-    f.addMouseListener(m);
-    f.addMouseMotionListener(m);
     g2d.dispose();
+    
     }
 
 }

@@ -18,14 +18,18 @@ public class ListenKey extends KeyAdapter {
     }
     @Override
     public void keyPressed(KeyEvent e) {
-        super.keyTyped(e);
+        super.keyPressed(e);
 
         if (e.getKeyChar()=='d'){
-            pani.panel.player.x+=1 ;
+            pani.panel.setVelocityX(10);
+            this.pani.panel.player.x+=this.pani.panel.velocityX;
+
         }
+
         
         if (e.getKeyChar()=='q'){
-            
+            pani.panel.setVelocityX(10);
+            this.pani.panel.player.x-=this.pani.panel.velocityX;
         }
         if (e.getKeyChar()=='s'){
             pani.panel.player.setx(5);

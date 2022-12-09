@@ -8,7 +8,9 @@ public class ListenerMouse extends MouseAdapter{
     @Override
     public void mouseClicked(MouseEvent e) {
         super.mouseClicked(e);
-       // System.out.println("yes");
+        System.out.println(e.getX());
+        System.out.println(e.getY());
+
     }
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -19,6 +21,6 @@ public class ListenerMouse extends MouseAdapter{
     
     @Override
     public void mouseMoved(MouseEvent e) {
-        pan.panel.setImagePosition(e.getX(), e.getY());
+       // pan.panel.setImagePosition(e.getX(), e.getY());
     }
 }

@@ -1,18 +1,23 @@
 package element;
 import java.awt.*;
-public class Joueur {
+public class entity {
     Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-    int width = 50 ;
-    int height = 51 ;
-    int x ;
-    int y=(int)size.getHeight()/2;
+    int running ;
+    int width = 80;
+    int height = 81 ;
+    int x;
+    int y= (int)this.size.getHeight()/2;
     double PointVie ;
     double attack ;
     double vitesse ;
     String nomJoueur ;
-    double puissance  ;
     int level ;
     int taille ;
+    int tomber ;
+    int saut ;
+    int attack_saut1 ;
+    int attack_saut2 ;
+    
     public void setWidth(int width) {
         this.width = width;
     }
@@ -62,12 +67,6 @@ public class Joueur {
     public void setNomEnemy(String nomJoueur) {
         this.nomJoueur = nomJoueur;
     }
-    public double getPuissance() {
-        return puissance;
-    }
-    public void setPuissance(double puissance) {
-        this.puissance = puissance;
-    }
     public int getLevel() {
         return level;
     }
@@ -79,5 +78,8 @@ public class Joueur {
     }
     public void setTaille(int taille) {
         this.taille = taille;
+    }
+    public int getSpritAmount (int Action_Joueur){
+        return Action_Joueur ;
     }
 }
