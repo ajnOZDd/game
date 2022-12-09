@@ -13,14 +13,12 @@ public class ListenerMouse extends MouseAdapter{
     @Override
     public void mouseReleased(MouseEvent e) {
         super.mouseReleased(e);
-        System.out.println("oui enconre");
-    }
-    @Override
-    public void mouseDragged(MouseEvent e) {
-       
+        //System.out.println(e.getX());
+        
     }
     
+    @Override
     public void mouseMoved(MouseEvent e) {
-        
+        pan.panel.setImagePosition(e.getX(), e.getY());
     }
 }

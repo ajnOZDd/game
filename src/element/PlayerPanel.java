@@ -2,6 +2,8 @@ package element ;
 import java.awt.event.* ;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
@@ -13,11 +15,29 @@ public class PlayerPanel extends JPanel  {
     int frames ;
     long lastCheck=0 ;
     AllPanel pan ;
-    Image img;
     Joueur player ;
     File file;
-    Image im;
+    BufferedImage img, subImage;
     ListenKey key ;
+    public PlayerPanel(AllPanel pan ) {
+        player= new Joueur() ;
+        //key= new ListenKey(pan , this);
+        getImage();
+    }
+    
+    private void getImage() {
+    InputStream is = getClass().getResourceAsStream("../Free/Main Characters/Ninja Frog/Idle (32x32).png");
+    try {
+      img = ImageIO.read(is) ;
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    }
+    public void setImagePosition(int x , int y) {
+        player.x=x ;
+        player.y=y ;
+    }
+    
     public int getVelocityX() {
         return velocityX;
     }
@@ -36,32 +56,31 @@ public class PlayerPanel extends JPanel  {
         this.velocityY = velocityY;
     }
 
-    public PlayerPanel(AllPanel pan ) {
-        player= new Joueur() ;
-        //key= new ListenKey(pan , this);
-        this.setPreferredSize(new Dimension (500 ,500));
-        file = new File("D:/java/game/src/img/girl/png/walk/walk1.png");
-         img = new BufferedImage(player.getWidth(), player.getHeight(), BufferedImage.TYPE_INT_ARGB);
-         try {
-         img= ImageIO.read(file);
-         } catch (IOException e) {
-                e.printStackTrace();
-          }
-        
-    }
-    
-
     public void  draw (Graphics2D g){
         super.paint(g);
-        this.player.x+=this.velocityX ;
-        this.player.y+=this.velocityY;
         Graphics2D g2d = (Graphics2D) g;
-       
-        g2d.drawImage(img, player.getx(), player.gety(), player.getWidth(), player.getHeight(), this) ;
-
+        arrets();
+        //System.out.println(this.player.size.getWidth());
+       // player.x+=velocityX;
+        //player.y+=velocityY;
+        //System.out.println(player.x);
+        subImage = img.getSubimage(0, 0, 32, 32);
+        g2d.drawImage(subImage, player.getx(), player.gety(), player.getWidth(), player.getHeight(), this) ;
+      
     }
 
-    
+    public void arrets (){
+        if (this.player.x<0 || this.player.x>1400){
+         this.player.x-=1 ;
+         //System.out.println(this.player.x);
+        }
+        if (this.player.y<0 || this.player.y>700){
+        this.player.y-=1 ;
+       // System.out.println(this.player.y);
+
+        }
+
+    }
 }
 
 

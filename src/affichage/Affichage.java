@@ -18,7 +18,6 @@ public class Affichage extends JFrame implements Runnable {
     PlayerPanel pane ;
     AllPanel pan ;
     Background background ;
-    ListenerMouse m ;
     ListenKey key  ;
     Thread gamethread ;
     double timeChange = 0;
@@ -30,16 +29,16 @@ public class Affichage extends JFrame implements Runnable {
    // pane= new PlayerPanel(pan) ;
     pan = new AllPanel(this) ;
 
-    m=new ListenerMouse(pan);
    // this.addKeyListener(key);
     //this.getContentPane().setBackground(Color.BLACK);
-    this.addMouseListener(m);
     this.add(pan);
     //this.add(pane);
+    this.setResizable(false);
     this.pack();
     this.setVisible(true);
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     this.setFocusable(true);
+    this.setLocationRelativeTo(null);
     startGameloop();
     }
     public static void main(String[] args) {
@@ -55,12 +54,14 @@ public class Affichage extends JFrame implements Runnable {
         long lastframe= System.nanoTime() ;
         long now = System.nanoTime() ;
         while(true){
+           
             now=System.nanoTime() ;
             if(now-lastframe>=timeFrame){
                 pan.repaint();
                 lastframe=now ;
+                frames++;
+
             }
-        frames++;
         if(System.currentTimeMillis()-lastCheck>=1000){
             lastCheck=System.currentTimeMillis() ;
             System.out.println("fps:"+frames);

@@ -21,29 +21,16 @@ public class ListenKey extends KeyAdapter {
         super.keyTyped(e);
 
         if (e.getKeyChar()=='d'){
-            pani.panel.setVelocityX(10);
-            pani.panel.player.x+=pani.panel.velocityX*1 ;
-            pani.panel.player.x-=pani.panel.velocityX*1;
-
-           // pani.panel.img = new BufferedImage(pani.panel.player.getWidth(), pani.panel.player.getHeight(), BufferedImage.TYPE_INT_ARGB);
-          }
-        
-
-       // System.out.println(pani.panel.player.x);
+            pani.panel.player.x+=1 ;
+        }
         
         if (e.getKeyChar()=='q'){
-         pani.removeAll();
-        pani.panel.setVelocityX(-5);
-        pani.panel.player.x+=pani.panel.velocityX ;
-        pani.panel.player.x-=pani.panel.velocityX ;
-        
+            
         }
         if (e.getKeyChar()=='s'){
             pani.panel.player.setx(5);
             pani.panel.setLocation(pani.panel.player.getx()-1, pani.panel.player.y);
             System.out.println(pani.panel.player.x);
-            pani.repaint();
-
         }
        
 
