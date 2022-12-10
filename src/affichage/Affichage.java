@@ -45,9 +45,7 @@ public class Affichage extends JFrame implements Runnable{
 
     startGameloop();
     }
-    public static void main(String[] args) {
-        Affichage affichage = new Affichage();
-    }
+    
     
     public void startGameloop (){
         gamethread= new Thread(this) ;
@@ -75,8 +73,12 @@ public class Affichage extends JFrame implements Runnable{
         }
 
         }
+
+
         
         
     }
-     
+     public static void main(String[] args) {
+        Affichage affichage = new Affichage();
+    }
 }

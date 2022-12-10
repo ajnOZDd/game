@@ -4,11 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Vector;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
 import  javax.imageio.ImageIO ;
+import static element.Util.*;
 public class PlayerPanel extends JPanel  {
     int position=1 ;
     int velocityX ;
@@ -23,31 +23,37 @@ public class PlayerPanel extends JPanel  {
     InputStream is;
     BufferedImage [] loading ;
     int number;
-    String [] novementEvenement = {"Idle (32x32).png", "Jump (32x32).png","Fall (32x32).png", "Double Jump (32x32).png", "Hit (32x32).png", "Run (32x32).png" } ;
-    int [] frameExactJump= {26};
+    String [] novementEvenement = {"Idle (32x32).png","Run (32x32).png","Double Jump (32x32).png", "Jump (32x32).png","Fall (32x32).png", "Hit (32x32).png",  } ;
     ListenKey key ;
-    int aniTick, aniIndex, aniSpeed=15 ;
+    int aniTick, aniIndex, aniSpeed=8 ;
+    int nomEvenement ;
+    int playerAction =running;
     public PlayerPanel(AllPanel pan ) {
         player= new entity() ;
         //key= new ListenKey(pan , this);
-        getImageBasique(0);
-        loadImageIdle(11);
+        getImageBasique();
     }
     
-    private void getImageBasique(int nomEvenement) {
-    is = getClass().getResourceAsStream("../Free/Main Characters/Ninja Frog/all.png");
+    private void getImageBasique() {
+    is =getClass().getResourceAsStream("../Free/Main Characters/Ninja Frog/"+novementEvenement[0]);
     try {
       img = ImageIO.read(is) ;
     } catch (IOException e) {
       e.printStackTrace();
     }
     }
-    public void loadImageIdle (int countImageFRame){
-    loading = new BufferedImage[countImageFRame];
-    for ( int i =0 ; i<loading.length ; i++){
-    loading[i]= img.getSubimage(i*32,0,51,51) ;
-        
+    public void loadImageIdle ( int nombreexact){
+    is =getClass().getResourceAsStream("../Free/Main Characters/Ninja Frog/"+novementEvenement[nombreexact]);
+    try {
+        img = ImageIO.read(is) ;
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+    loading = new BufferedImage[GetSpriteImage(playerAction)];
+    for ( int i =0 ; i<loading.length ; i++){
+     loading[i]=img.getSubimage(i*32, 0,32, 32);
+    }
+       
     }
    
     public void setImagePosition(int x , int y) {
@@ -99,6 +105,7 @@ public class PlayerPanel extends JPanel  {
         Graphics2D g2d = (Graphics2D) g;
         arrets();
         updateAnimationTick();
+        loadImageIdle( playerAction);
         g2d.drawImage(loading[aniIndex], player.x, player.y, player.getWidth(), player.getHeight(), this) ;
       
     }
