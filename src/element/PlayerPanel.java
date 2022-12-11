@@ -24,38 +24,49 @@ public class PlayerPanel extends JPanel  {
     BufferedImage [] loading ;
     int number;
     String [] novementEvenement = {"Idle (32x32).png","Run (32x32).png","Double Jump (32x32).png", "Jump (32x32).png","Fall (32x32).png", "Hit (32x32).png",  } ;
-    ListenKey key ;
-    int aniTick, aniIndex, aniSpeed=8 ;
+    int aniTick, aniIndex, aniSpeed=15 ;
     int nomEvenement ;
-    int playerAction =running;
+    int nombreexact;
+    int playerAction;
+    double playerSpeed =2.08 ;
+    boolean up , right , left,down ; 
+    Boolean mov =true ;
     public PlayerPanel(AllPanel pan ) {
         player= new entity() ;
         //key= new ListenKey(pan , this);
-        getImageBasique();
+        imageBasique();
     }
+   
     
-    private void getImageBasique() {
-    is =getClass().getResourceAsStream("../Free/Main Characters/Ninja Frog/"+novementEvenement[0]);
-    try {
-      img = ImageIO.read(is) ;
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    }
-    public void loadImageIdle ( int nombreexact){
+    public void loadImageIdle (int nombreexact){
+    loading = new BufferedImage[GetSpriteImage(nombreexact)];
     is =getClass().getResourceAsStream("../Free/Main Characters/Ninja Frog/"+novementEvenement[nombreexact]);
     try {
         img = ImageIO.read(is) ;
+        for ( int i =0 ; i<loading.length ; i++){
+            loading[i]=img.getSubimage(i*32, 0,32, 32);
+           
+        }
+        
     } catch (IOException e) {
-        e.printStackTrace();
+        System.out.println("sorry");
     }
-    loading = new BufferedImage[GetSpriteImage(playerAction)];
+    
+    
+    }
+    public void imageBasique (){
+        loading = new BufferedImage[11];
+        is =getClass().getResourceAsStream("../Free/Main Characters/Ninja Frog/"+novementEvenement[0]);
+    try {
+        img = ImageIO.read(is) ;
+        
+    } catch (IOException e) {
+    }
     for ( int i =0 ; i<loading.length ; i++){
-     loading[i]=img.getSubimage(i*32, 0,32, 32);
-    }
+        loading[i]=img.getSubimage(i*32, 0,32, 32);
        
     }
-   
+    }
     public void setImagePosition(int x , int y) {
         player.x=x ;
         player.y=y ;
@@ -78,37 +89,317 @@ public class PlayerPanel extends JPanel  {
     public void setVelocityY(int velocityY) {
         this.velocityY = velocityY;
     }
-    private void updateAnimationTick() {
+    public void updateAnimationTick() {
         aniTick++;
         if (aniTick>=aniSpeed){
             aniTick=0 ;
             aniIndex++;
-            if (aniIndex>=loading.length){
+            if (aniIndex>=GetSpriteImage(playerAction)){
                 aniIndex=0 ;
+                
             }
         }
     }
-    public void arrets (){
-        if (this.player.x<0 ){
-         this.player.x=-1 ;
-         //System.out.println(this.player.x);
-        }else{
-            if ( this.player.x>1100 && this.player.y>500){
-                this.player.x=1400 ;
-            }
-        }
-       
 
+    
+    public void setMov(Boolean mov) {
+        this.mov = mov;
     }
-    public void  draw (Graphics g){
-        super.paint(g);
-        Graphics2D g2d = (Graphics2D) g;
-        arrets();
+    public void Animation (){
+        if (mov){
+            playerAction=running ;
+
+        }else{
+            playerAction=idle ;
+
+        }
+    }
+    public void gamepos(){
+        mov=false ;
+        if (left && !right){
+        this.player.x-= playerSpeed ;     
+             mov=true ;
+        }else if (!left && right){
+            this.player.x+= playerSpeed ;
+            mov=true ;
+        }
+        if (up && !down){
+            this.player.y-= playerSpeed ;
+            mov=true ;
+        }else if (!up && down){
+            this.player.y+= playerSpeed ;
+            mov=true ;
+        }
+    }
+    public void gameUpdate (){
+        gamepos();
         updateAnimationTick();
-        loadImageIdle( playerAction);
-        g2d.drawImage(loading[aniIndex], player.x, player.y, player.getWidth(), player.getHeight(), this) ;
+        Animation();
+    }
+    private void resetBoolean() {
+        right=false ;
+        left=false ;
+        up=false ;
+        down=false ;
+    }
+    public void windowlost (){
+        this.resetBoolean() ;
+    }
+   
+    public void  draw (Graphics g){
+        super.paintComponent(g);
+        loadImageIdle(playerAction);
+        g.drawImage(loading[aniIndex], player.x, player.y, player.getWidth(), player.getHeight(), this) ;
       
     }
+
+
+    public int getPosition() {
+        return position;
+    }
+
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+
+    public double getTimeChange() {
+        return timeChange;
+    }
+
+
+    public void setTimeChange(double timeChange) {
+        this.timeChange = timeChange;
+    }
+
+
+    public int getFrames() {
+        return frames;
+    }
+
+
+    public void setFrames(int frames) {
+        this.frames = frames;
+    }
+
+
+    public long getLastCheck() {
+        return lastCheck;
+    }
+
+
+    public void setLastCheck(long lastCheck) {
+        this.lastCheck = lastCheck;
+    }
+
+
+    public int getCountImageFRame() {
+        return countImageFRame;
+    }
+
+
+    public void setCountImageFRame(int countImageFRame) {
+        this.countImageFRame = countImageFRame;
+    }
+
+
+    public AllPanel getPan() {
+        return pan;
+    }
+
+
+    public void setPan(AllPanel pan) {
+        this.pan = pan;
+    }
+
+
+    public entity getPlayer() {
+        return player;
+    }
+
+
+    public void setPlayer(entity player) {
+        this.player = player;
+    }
+
+
+    public File getFile() {
+        return file;
+    }
+
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+
+    public BufferedImage getImg() {
+        return img;
+    }
+
+
+    public void setImg(BufferedImage img) {
+        this.img = img;
+    }
+
+
+    public BufferedImage getSubImage() {
+        return subImage;
+    }
+
+
+    public void setSubImage(BufferedImage subImage) {
+        this.subImage = subImage;
+    }
+
+
+    public InputStream getIs() {
+        return is;
+    }
+
+
+    public void setIs(InputStream is) {
+        this.is = is;
+    }
+
+
+    public BufferedImage[] getLoading() {
+        return loading;
+    }
+
+
+    public void setLoading(BufferedImage[] loading) {
+        this.loading = loading;
+    }
+
+
+    public int getNumber() {
+        return number;
+    }
+
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+
+    public String[] getNovementEvenement() {
+        return novementEvenement;
+    }
+
+
+    public void setNovementEvenement(String[] novementEvenement) {
+        this.novementEvenement = novementEvenement;
+    }
+
+
+    public int getAniTick() {
+        return aniTick;
+    }
+
+
+    public void setAniTick(int aniTick) {
+        this.aniTick = aniTick;
+    }
+
+
+    public int getAniIndex() {
+        return aniIndex;
+    }
+
+
+    public void setAniIndex(int aniIndex) {
+        this.aniIndex = aniIndex;
+    }
+
+
+    public int getAniSpeed() {
+        return aniSpeed;
+    }
+
+
+    public void setAniSpeed(int aniSpeed) {
+        this.aniSpeed = aniSpeed;
+    }
+
+
+    public int getNomEvenement() {
+        return nomEvenement;
+    }
+
+
+    public void setNomEvenement(int nomEvenement) {
+        this.nomEvenement = nomEvenement;
+    }
+
+
+    public int getNombreexact() {
+        return nombreexact;
+    }
+
+
+    public void setNombreexact(int nombreexact) {
+        this.nombreexact = nombreexact;
+    }
+
+
+    public int getPlayerAction() {
+        return playerAction;
+    }
+
+
+    public void setPlayerAction(int playerAction) {
+        this.playerAction = playerAction;
+    }
+
+
+    public boolean isUp() {
+        return up;
+    }
+
+
+    public void setUp(boolean up) {
+        this.up = up;
+    }
+
+
+    public boolean isRight() {
+        return right;
+    }
+
+
+    public void setRight(boolean right) {
+        this.right = right;
+    }
+
+
+    public boolean isLeft() {
+        return left;
+    }
+
+
+    public void setLeft(boolean left) {
+        this.left = left;
+    }
+
+
+    public boolean isDown() {
+        return down;
+    }
+
+
+    public void setDown(boolean down) {
+        this.down = down;
+    }
+
+
+    public Boolean getMov() {
+        return mov;
+    }
+    
+
+
 
     
 }

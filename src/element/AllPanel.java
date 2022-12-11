@@ -3,11 +3,16 @@ package element;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import affichage.Affichage;
+
 import java.awt.*;
 import element.PlayerPanel;
+import main.Affichage;
 public class AllPanel extends JPanel {
    PlayerPanel panel ;
+ 
+
+
+
     Background background ;
     Affichage f ;
     Timer time ;
@@ -15,7 +20,7 @@ public class AllPanel extends JPanel {
    ListenerMouse m ;
 
     public AllPanel (Affichage f){
-    k= new ListenKey(this, panel);
+    k= new ListenKey(this);
     m=new ListenerMouse(this);
     panel= new PlayerPanel(this);
     background = new Background(this);
@@ -31,14 +36,23 @@ public class AllPanel extends JPanel {
         this.setPreferredSize(dim);
     }
 
+    
+    public PlayerPanel getPanel() {
+        return panel;
+    }
+    
+    public void setPanel(PlayerPanel panel) {
+        this.panel = panel;
+    }
     public void paintComponent(Graphics g){
     super.paintComponent(g);
     Graphics2D g2d = (Graphics2D)g;
-    panel.draw(g2d);
     setPanelSize();
+    panel.draw(g2d);
     background.draw(g2d);
     g2d.dispose();
     
     }
+
 
 }

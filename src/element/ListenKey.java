@@ -7,38 +7,63 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-
+import static element.Util.*;;
 public class ListenKey extends KeyAdapter {
     AllPanel pani ;
     int i ;
-    PlayerPanel pan ;
-    public ListenKey (AllPanel pani, PlayerPanel pan){
+
+    public ListenKey (AllPanel pani){
         this.pani=pani ;
-        this.pan=pan ;
+    }
+    @Override 
+    public void keyReleased (KeyEvent e){
+        super.keyReleased(e);
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_UP:
+            pani.panel.setUp(false);
+           
+            
+            case KeyEvent.VK_DOWN:
+           
+            pani.panel.setDown(false);
+            
+            case KeyEvent.VK_LEFT:
+            pani.panel.setLeft(false);
+            
+            case KeyEvent.VK_RIGHT:
+            pani.panel.setRight(false);
+            break ;
+    }
+ }
+    @Override
+    public void keyTyped (KeyEvent e){
+        super.keyTyped(e);
+       
     }
     @Override
     public void keyPressed(KeyEvent e) {
         super.keyPressed(e);
 
-        if (e.getKeyChar()=='d'){
-            pani.panel.setVelocityX(10);
-            this.pani.panel.player.x+=this.pani.panel.velocityX;
-
-        }
-
-        
-        if (e.getKeyChar()=='q'){
-            pani.panel.setVelocityX(10);
-            this.pani.panel.player.x-=this.pani.panel.velocityX;
-        }
-        if (e.getKeyChar()=='s'){
-            pani.panel.player.setx(5);
-            pani.panel.setLocation(pani.panel.player.getx()-1, pani.panel.player.y);
-            System.out.println(pani.panel.player.x);
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_UP:
+            pani.panel.setUp(true);
+            break ;
+            case KeyEvent.VK_DOWN:
+            pani.panel.setDown(true);
+            break ;
+            case KeyEvent.VK_LEFT:
+            pani.panel.setLeft(true);
+            break ;
+            case KeyEvent.VK_RIGHT:
+            pani.panel.setRight(true);
+            break ;
+    }
+            
+            
         }
        
 
     }
    
     
-}
+
