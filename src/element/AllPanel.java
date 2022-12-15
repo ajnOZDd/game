@@ -9,47 +9,47 @@ import element.PlayerPanel;
 import main.Affichage;
 public class AllPanel extends JPanel {
    PlayerPanel panel ;
- 
-
-
-
-    Background background ;
+    level background ;
     Affichage f ;
     Timer time ;
    ListenKey k ;
    ListenerMouse m ;
+   Dimension dim ;
 
     public AllPanel (Affichage f){
     k= new ListenKey(this);
     m=new ListenerMouse(this);
     panel= new PlayerPanel(this);
-    background = new Background(this);
-    this.setPreferredSize(new Dimension(500,400));
+    //background = new Back(this);
     setPanelSize() ;
+    dim = new Dimension (1080,720) ;
+    this.setPreferredSize(dim);
+    //System.out.println(f.getGame_width() +"||"+f.getGame_height() );
+
    // time= new Timer(1000, k);
     this.setOpaque(true);
     this.f=f ;
     }
     
     public void setPanelSize() {
-        Dimension dim = new Dimension (1280,800) ;
-        this.setPreferredSize(dim);
     }
 
     
     public PlayerPanel getPanel() {
         return panel;
     }
-    
+    public level getBack() {
+        return background;
+    }
     public void setPanel(PlayerPanel panel) {
         this.panel = panel;
     }
     public void paintComponent(Graphics g){
     super.paintComponent(g);
     Graphics2D g2d = (Graphics2D)g;
-    setPanelSize();
-    panel.draw(g2d);
-    background.draw(g2d);
+ //..
+  //background.draw(g2d);
+   panel.draw(g2d);
     g2d.dispose();
     
     }

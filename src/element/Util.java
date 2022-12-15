@@ -13,7 +13,13 @@ public  class Util {
     public static final int left = 2 ;
     public static final int right = 3 ;
 
-    public static  int GetSpriteImage (int playerAction){
+    public static final int Apple=0 ;
+    public static final int Bananas=1;
+    public static final int Cherries=2 ;
+    public static final int Kiwi=3 ;
+
+
+    public static  int GetSpriteCharacterImage (int playerAction){
         switch (playerAction) {
             
             case running:
@@ -28,8 +34,23 @@ public  class Util {
                 return 7 ;
 
             default:
-                return 1 ;
+                return 0 ;
         
+        }
+    }
+
+    public static int getFruiImage (int FruitSelect){
+        switch (FruitSelect) {
+            case Apple:
+            return 17 ;
+            case Bananas:
+            return 17 ;
+            case Cherries:
+            return 17 ;
+            case Kiwi :
+            return 17 ;
+            default:
+                return 0 ;
         }
     }
     

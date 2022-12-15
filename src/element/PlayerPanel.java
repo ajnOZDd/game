@@ -34,39 +34,20 @@ public class PlayerPanel extends JPanel  {
     public PlayerPanel(AllPanel pan ) {
         player= new entity() ;
         //key= new ListenKey(pan , this);
-        imageBasique();
+       //imageBasique();
     }
    
     
     public void loadImageIdle (int nombreexact){
-    loading = new BufferedImage[GetSpriteImage(nombreexact)];
-    is =getClass().getResourceAsStream("../Free/Main Characters/Ninja Frog/"+novementEvenement[nombreexact]);
-    try {
-        img = ImageIO.read(is) ;
-        for ( int i =0 ; i<loading.length ; i++){
-            loading[i]=img.getSubimage(i*32, 0,32, 32);
-           
-        }
-        
-    } catch (IOException e) {
-        System.out.println("sorry");
-    }
-    
-    
-    }
-    public void imageBasique (){
-        loading = new BufferedImage[11];
-        is =getClass().getResourceAsStream("../Free/Main Characters/Ninja Frog/"+novementEvenement[0]);
-    try {
-        img = ImageIO.read(is) ;
-        
-    } catch (IOException e) {
-    }
+    loading = new BufferedImage[GetSpriteCharacterImage(nombreexact)];
+    img=LoadSave.mage(nombreexact, novementEvenement);
     for ( int i =0 ; i<loading.length ; i++){
-        loading[i]=img.getSubimage(i*32, 0,32, 32);
-       
+    loading[i]=img.getSubimage(i*32, 0, 32, 32);   
     }
+        
+    
     }
+   
     public void setImagePosition(int x , int y) {
         player.x=x ;
         player.y=y ;
@@ -94,7 +75,7 @@ public class PlayerPanel extends JPanel  {
         if (aniTick>=aniSpeed){
             aniTick=0 ;
             aniIndex++;
-            if (aniIndex>=GetSpriteImage(playerAction)){
+            if (aniIndex>=GetSpriteCharacterImage(playerAction)){
                 aniIndex=0 ;
                 
             }
@@ -108,8 +89,10 @@ public class PlayerPanel extends JPanel  {
     public void Animation (){
         if (mov){
             playerAction=running ;
+            
 
-        }else{
+        }
+        if(mov==false){
             playerAction=idle ;
 
         }
@@ -130,11 +113,14 @@ public class PlayerPanel extends JPanel  {
             this.player.y+= playerSpeed ;
             mov=true ;
         }
+
+        
     }
     public void gameUpdate (){
         gamepos();
         updateAnimationTick();
         Animation();
+
     }
     private void resetBoolean() {
         right=false ;
@@ -150,7 +136,8 @@ public class PlayerPanel extends JPanel  {
         super.paintComponent(g);
         loadImageIdle(playerAction);
         g.drawImage(loading[aniIndex], player.x, player.y, player.getWidth(), player.getHeight(), this) ;
-      
+        
+        
     }
 
 
